@@ -47,6 +47,7 @@ use OC\Files\Mount\MoveableMount;
 use OCP\Files\FileNameTooLongException;
 use OCP\Files\InvalidCharacterInPathException;
 use OCP\Files\InvalidPathException;
+use OCP\Files\NotFoundException;
 use OCP\Files\ReservedWordException;
 use OCP\Lock\ILockingProvider;
 use OCP\Lock\LockedException;
@@ -1495,7 +1496,8 @@ class View {
 	 * Note that the resulting path is not guarantied to be unique for the id, multiple paths can point to the same file
 	 *
 	 * @param int $id
-	 * @return string|null
+	 * @throws NotFoundException
+	 * @return string
 	 */
 	public function getPath($id) {
 		$id = (int)$id;
@@ -1520,7 +1522,7 @@ class View {
 				}
 			}
 		}
-		return null;
+		throw new NotFoundException(sprintf('File with id "%s" has not been found.', $id));
 	}
 
 	private function assertPathLength($path) {
