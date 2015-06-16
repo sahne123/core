@@ -1706,6 +1706,7 @@ class View {
 	 * @throws \OCP\Lock\LockedException if the path is already locked
 	 */
 	public function changeLock($path, $type) {
+		$path = '/' . trim($path, '/');
 		$absolutePath = $this->getAbsolutePath($path);
 		if (!$this->shouldLockFile($absolutePath)) {
 			return false;
